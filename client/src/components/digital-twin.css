@@ -1,0 +1,74 @@
+.digital-twin {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, #0005 40%, #000 64%);
+  opacity: 0.5;
+  transition: opacity 0.5s;
+}
+.digital-twin canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  pointer-events: none;
+}
+.twin-static {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: 12%;
+  right: -80px;
+  perspective: 1000px;
+  opacity: 0.5;
+}
+.twin-static i {
+  position: absolute;
+  left: 15%;
+  top: 20%;
+  width: 310px;
+  height: 230px;
+  border-radius: 25px;
+  border: 1px solid var(--navy-glow);
+  background: linear-gradient(
+    130deg,
+    var(--navy-dim),
+    color-mix(in srgb, var(--violet) 8%, transparent)
+  );
+  transform: rotateX(52deg) rotateZ(-32deg);
+  box-shadow: 12px 25px 75px var(--navy-dim);
+}
+.twin-static i:nth-child(2) {
+  top: 28%;
+  left: 20%;
+}
+.twin-static i:nth-child(3) {
+  top: 36%;
+  left: 25%;
+}
+.twin-static i:nth-child(4) {
+  top: 44%;
+  left: 30%;
+}
+.twin-static i:nth-child(5) {
+  top: 52%;
+  left: 35%;
+}
+.is-ready .twin-static {
+  visibility: hidden;
+}
+@media (max-width: 760px) {
+  .digital-twin {
+    opacity: 0.25;
+    mask-image: linear-gradient(90deg, transparent 15%, #000 100%);
+  }
+  .twin-static {
+    right: -240px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .digital-twin {
+    transition: none;
+  }
+}

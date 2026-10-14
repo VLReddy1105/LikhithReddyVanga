@@ -1,0 +1,36 @@
+{
+  "fetchedAt": "2026-10-13T22:03:44Z",
+  "profile": {
+    "login": "VLReddy1105",
+    "name": "Likhith Reddy Vanga",
+    "bio": "AI Researcher | M.Sc. AI @ BTU-Cottbus,Germany | B.Tech CSE -AI | Parul University | Founder @ VLR Technologies | Building AI, SaaS & intelligent product.",
+    "avatar_url": "https://avatars.githubusercontent.com/u/196384684?v=4",
+    "html_url": "https://github.com/VLReddy1105"
+  },
+  "repositories": [
+    {
+      "name": "nebius-survivor",
+      "full_name": "VLReddy1105/nebius-survivor",
+      "description": null,
+      "html_url": "https://github.com/VLReddy1105/nebius-survivor",
+      "language": "Python",
+      "stargazers_count": 0
+    },
+    {
+      "name": "LLM-Interpretability",
+      "full_name": "VLReddy1105/LLM-Interpretability",
+      "description": null,
+      "html_url": "https://github.com/VLReddy1105/LLM-Interpretability",
+      "language": "TypeScript",
+      "stargazers_count": 1
+    },
+    {
+      "name": "nextgen",
+      "full_name": "VLReddy1105/nextgen",
+      "description": null,
+      "html_url": "https://github.com/VLReddy1105/nextgen",
+      "language": "TypeScript",
+      "stargazers_count": 0
+    }
+  ]
+}
