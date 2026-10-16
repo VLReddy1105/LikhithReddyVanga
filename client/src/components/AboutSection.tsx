@@ -50,7 +50,6 @@ export default function AboutSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="A little context"
             title="Research depth. Product mindset."
           />
         </Reveal>
@@ -88,7 +87,7 @@ export default function AboutSection() {
               className="profile-focus"
               aria-label="How I approach my work"
             >
-              <p className="eyebrow">Three connected perspectives</p>
+              
               {FOCUS_AREAS.map(({ title, detail, icon: Icon }) => (
                 <div className="profile-focus-row" key={title}>
                   <span className="profile-icon">
@@ -107,13 +106,13 @@ export default function AboutSection() {
           <div className="profile-education">
             <div className="profile-education-heading">
               <p className="eyebrow">Education</p>
-              <p>A foundation in artificial intelligence.</p>
+              
             </div>
             <div className="profile-education-grid">
               {EDUCATION.map(education => (
                 <article className="profile-degree" key={education.degree}>
                   <div className="profile-degree-meta">
-                    <span className="profile-badge">{education.label}</span>
+                    
                     <span>{education.period}</span>
                   </div>
                   <h3>{education.degree}</h3>
