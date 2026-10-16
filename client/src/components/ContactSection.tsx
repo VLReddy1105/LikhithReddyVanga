@@ -126,14 +126,12 @@ export default function ContactSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Start a conversation"
             title="Let’s build something useful."
-            description="A research question, an engineering role, or a product that needs thoughtful execution — I’d like to hear about it."
           />
         </Reveal>
         <div className="contact-layout">
           <Reveal className="contact-details">
-            <p className="eyebrow">Get in touch</p>
+            
             <h3 id="contact-heading">Good work starts with a conversation.</h3>
             <p>
               Tell me what you’re exploring and where I can help. You can use
@@ -144,11 +142,7 @@ export default function ContactSection() {
               <span>{EMAIL}</span>
               <ArrowUpRight size={19} aria-hidden="true" />
             </a>
-            <div className="contact-interests" aria-label="Conversation topics">
-              <span>Research collaboration</span>
-              <span>AI & engineering roles</span>
-              <span>Product development</span>
-            </div>
+            
             <div className="contact-socials">
               <a
                 href="https://github.com/VLReddy1105"
