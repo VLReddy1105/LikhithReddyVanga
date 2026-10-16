@@ -87,9 +87,7 @@ export default function ExperienceSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Experience & practice"
             title="Where research meets delivery."
-            description="Academic research, company building and application engineering — each with a different purpose, connected by the same attention to useful systems."
           />
         </Reveal>
         <div className="experience-list">
@@ -97,7 +95,7 @@ export default function ExperienceSection() {
             <Reveal key={experience.role} delay={index * 0.06}>
               <article className="experience-entry">
                 <div className="experience-context">
-                  <p className="eyebrow">{experience.context}</p>
+                  
                   <p className="experience-organization">
                     {experience.organization}
                   </p>
@@ -109,14 +107,9 @@ export default function ExperienceSection() {
                 <div className="experience-detail">
                   <div className="experience-title-row">
                     <h3>{experience.role}</h3>
-                    {experience.current && (
-                      <span className="profile-badge">Current</span>
-                    )}
-                    {experience.status && (
-                      <span className="profile-badge">{experience.status}</span>
-                    )}
+                    
                   </div>
-                  <p className="experience-focus">{experience.focus}</p>
+                  
                   <p className="experience-contribution">
                     {experience.contribution}
                   </p>
