@@ -195,7 +195,7 @@ export default function GitHubContributions() {
           contributions
         </p>
       )}
-      <p className="social-note">
+      <p className="sr-only">
         {status === "fresh"
           ? "Updated GitHub calendar"
           : status === "cached"
@@ -205,7 +205,7 @@ export default function GitHubContributions() {
               : "Verified GitHub snapshot"}{" "}
         · {formatDate(calendar.fetchedAt, true)}. Future dates are pending.
       </p>
-      <p className="contribution-scope">
+      <p className="sr-only">
         {calendar.visibility === "authorized-calendar"
           ? "Public and authorized private activity · counts only, no repository details."
           : "Public-profile calendar. Private counts depend on GitHub permissions and contribution settings."}
