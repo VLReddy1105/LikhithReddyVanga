@@ -94,13 +94,13 @@ export default function ProjectDetail({
         <Reveal>
           <div className="case-study-intro">
             <div>
-              <p className="eyebrow">{project.category}</p>
+              
               <h1 ref={headingRef} tabIndex={-1}>
                 {project.title}
               </h1>
               <p className="case-study-lede">{project.summary}</p>
             </div>
-            <span className="project-status case-status">{project.status}</span>
+            
           </div>
           <dl className="case-study-facts">
             <div>
@@ -263,7 +263,7 @@ export default function ProjectDetail({
         <Reveal>
           <aside className="case-next" aria-label="More selected work">
             <div>
-              <p className="eyebrow">Keep exploring</p>
+              
               <h2>Different problems. Shared craft.</h2>
             </div>
             <div>
