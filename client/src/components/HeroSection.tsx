@@ -87,35 +87,7 @@ export default function HeroSection() {
       <div className="container relative z-10">
         <div className="hero-layout pt-24 pb-16">
           <div className="hero-copy">
-            {/* Location badge */}
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="flex flex-wrap items-center gap-2 mb-8"
-            >
-              <span
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.7rem",
-                  color: "var(--navy)",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                }}
-              >
-                ◉ Cottbus, Germany
-              </span>
-              <span
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.7rem",
-                  color: "var(--text-dim)",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                · Available for opportunities
-              </span>
-            </motion.div>
+
 
             {/* Name */}
             <motion.h1
@@ -295,26 +267,6 @@ export default function HeroSection() {
               >
                 <MailIcon />
               </a>
-
-              <span
-                style={{
-                  width: "1px",
-                  height: "20px",
-                  background: "var(--border)",
-                  display: "inline-block",
-                }}
-              />
-
-              <span
-                style={{
-                  fontFamily: "'JetBrains Mono', monospace",
-                  fontSize: "0.65rem",
-                  color: "var(--text-dim)",
-                  letterSpacing: "0.08em",
-                }}
-              >
-                reddylikhith10@gmail.com
-              </span>
             </motion.div>
           </div>
 
@@ -338,14 +290,7 @@ export default function HeroSection() {
                   fetchPriority="high"
                 />
               </div>
-              <div className="hero-portrait-badge">
-                <span className="hero-portrait-badge-dot" />
-                AI/ML Builder
-              </div>
             </div>
-            <p className="hero-scene-note">
-              Procedural AI ecosystem · scroll to explore
-            </p>
           </motion.aside>
         </div>
       </div>
@@ -353,6 +298,7 @@ export default function HeroSection() {
       {/* Scroll indicator */}
       <button
         onClick={scrollToAbout}
+        aria-label="Scroll to About section"
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         style={{
           background: "none",
@@ -361,16 +307,7 @@ export default function HeroSection() {
           cursor: "pointer",
         }}
       >
-        <span
-          style={{
-            fontFamily: "'JetBrains Mono', monospace",
-            fontSize: "0.6rem",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-          }}
-        >
-          scroll
-        </span>
+
         <motion.div animate={{ y: 0 }}>
           <ArrowDownIcon />
         </motion.div>
