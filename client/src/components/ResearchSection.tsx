@@ -95,14 +95,12 @@ export default function ResearchSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Research & exploration"
             title="Making transformer behavior visible."
-            description="Building tools that connect real model computation with careful, interactive visual explanation."
           />
         </Reveal>
         <div className="research-layout">
           <Reveal className="research-perspective">
-            <p className="eyebrow">The current focus</p>
+            
             <h3 id="research-heading">A closer look at the model.</h3>
             <p>
               My LLM interpretability work follows a token through embeddings,
@@ -146,9 +144,7 @@ export default function ResearchSection() {
           <Reveal className="research-explorer" delay={0.1}>
             <div className="research-explorer-header">
               <span className="eyebrow">Inside a transformer</span>
-              <span className="research-concept-label">
-                Conceptual overview
-              </span>
+              
             </div>
             <div
               className="research-lens-controls"
@@ -189,7 +185,7 @@ export default function ResearchSection() {
         <Reveal>
           <div className="research-methods">
             <div>
-              <span className="eyebrow">Representation geometry</span>
+              
               <h3>High-dimensional states. Thoughtful visual views.</h3>
             </div>
             <div>
@@ -212,7 +208,7 @@ export default function ResearchSection() {
         <Reveal>
           <div className="research-completed">
             <div>
-              <p className="eyebrow">Applied research · Completed</p>
+              
               <h3>MotionCB — solar infrastructure mapping</h3>
               <p>
                 At BTU Cottbus-Senftenberg, I contributed to deep learning
