@@ -65,8 +65,8 @@
   --surface: #ffffff;
   --surface-2: #f8fafc;
   --text-primary: #0f172a;
-  --text-muted: #526176;
-  --text-dim: #627088;
+  --text-muted: #42526a;
+  --text-dim: #4b5a6d;
   --button-foreground: #ffffff;
   --bg-image-opacity: 0.05;
 }
@@ -428,12 +428,12 @@
   margin-bottom: 3rem;
 }
 .eyebrow {
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.69rem;
-  font-weight: 500;
-  letter-spacing: 0.13em;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.79rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--text-primary);
   margin-bottom: 1rem;
 }
 .section-intro h2 {
@@ -784,8 +784,8 @@
 :root {
   --background: #ffffff;
   --text-primary: #121938;
-  --text-muted: #535f79;
-  --text-dim: #606d85;
+  --text-muted: #42526a;
+  --text-dim: #4b5a6d;
   --navy: #2358f5;
   --navy-light: #4d78fa;
   --navy-dim: #2358f50e;
