@@ -13,23 +13,17 @@ function ProjectStory({ project, index }: { project: Project; index: number }) {
         className={`project-story project-story--${index % 2 ? "reverse" : "forward"}`}
       >
         <div className="project-story-copy">
-          <div className="project-story-meta">
-            <span className="project-number">0{index + 1}</span>
-            <span className="project-status">{project.status}</span>
-          </div>
-          <p className="eyebrow">{project.category}</p>
+          
           <h3>
             <Link href={`/projects/${project.slug}`}>{project.shortTitle}</Link>
           </h3>
           <p className="project-name">{project.title}</p>
           <p className="project-summary">{project.summary}</p>
           <p className="project-role">
-            <span>My contribution</span>
+            
             {project.role}
           </p>
-          <p className="project-tech-summary">
-            {project.technologies.join(" / ")}
-          </p>
+          
           <div className="project-actions">
             <Link
               href={`/projects/${project.slug}`}
@@ -85,9 +79,7 @@ export default function ProjectsSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Selected work / 01—06"
             title="Understanding AI. Engineering what comes next."
-            description="Research tools, conversational systems and applied machine learning. A look at the architecture, the decisions and my contribution."
           />
         </Reveal>
         <div className="project-stories">
