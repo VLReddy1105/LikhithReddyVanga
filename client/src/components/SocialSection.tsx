@@ -29,9 +29,7 @@ export default function SocialSection() {
       <div className="container">
         <Reveal>
           <SectionHeading
-            eyebrow="Beyond the portfolio"
             title="Thoughts, research & updates."
-            description="The work in progress, the ideas behind it, and the code that connects them."
           />
         </Reveal>
         <div className="social-grid">
@@ -115,11 +113,7 @@ export default function SocialSection() {
                   </p>
                 </div>
               )}
-              {linkedinPosts.length > 0 && (
-                <p className="social-note">
-                  Selected public posts · manually curated
-                </p>
-              )}
+              
               <a
                 href={linkedinProfile.url}
                 target="_blank"
@@ -145,7 +139,7 @@ export default function SocialSection() {
                 <ArrowUpRight size={17} aria-hidden="true" />
               </a>
               <div className="github-intro">
-                <p className="eyebrow">Public source / selected repositories</p>
+                
                 <h3>
                   Built with curiosity.
                   <br />
@@ -229,7 +223,7 @@ export default function SocialSection() {
               </div>
               {!!data.activity?.length && (
                 <div className="github-activity">
-                  <p className="eyebrow">Recent public activity</p>
+                  <h4 className="github-activity-title">Recent activity</h4>
                   {data.activity.map(event => (
                     <a
                       key={event.id}
@@ -248,12 +242,10 @@ export default function SocialSection() {
                       </time>
                     </a>
                   ))}
-                  <p className="social-note">
-                    GitHub public events may be delayed.
-                  </p>
+                  
                 </div>
               )}
-              <p className="social-note" aria-live="polite">
+              <p className="sr-only" aria-live="polite">
                 {state === "checking"
                   ? "Checking GitHub · verified snapshot shown"
                   : state === "updated"
