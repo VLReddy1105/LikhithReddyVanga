@@ -1,4 +1,5 @@
 import express from "express";
+import { contributionsHandler } from "./githubContributions";
 import { createServer } from "http";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -16,6 +17,7 @@ async function startServer() {
       ? path.resolve(__dirname, "public")
       : path.resolve(__dirname, "..", "dist", "public");
 
+  app.all("/api/github-contributions", contributionsHandler);
   app.use(express.static(staticPath));
 
   // Handle client-side routing - serve index.html for all routes

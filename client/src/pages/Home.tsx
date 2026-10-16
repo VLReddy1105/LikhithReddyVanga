@@ -1,44 +1,34 @@
-/* Neural Monochrome — Home Page
-   Assembles all sections with loading screen gate */
+/* Portfolio composition; one shared procedural scene. */
 
-import { useState } from "react";
-import LoadingScreen from "@/components/LoadingScreen";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ExperienceSection from "@/components/ExperienceSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import ResearchSection from "@/components/ResearchSection";
-import SkillsSection from "@/components/SkillsSection";
-import BlogsSection from "@/components/BlogsSection";
+import SocialSection from "@/components/SocialSection";
+import DigitalTwin from "@/components/DigitalTwin";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
-  const [loaded, setLoaded] = useState(false);
-
   return (
     <>
-      <CustomCursor />
-      {!loaded && <LoadingScreen onComplete={() => setLoaded(true)} />}
-      <div
-        style={{
-          opacity: loaded ? 1 : 0,
-          transition: "opacity 0.5s ease",
-          background: "var(--background)",
-          minHeight: "100vh",
-        }}
-      >
+      <a href="#main-content" className="skip-link">
+        Skip to content
+      </a>
+      <div className="portfolio-shell">
+        <DigitalTwin />
         <Navbar />
-        <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <ProjectsSection />
-        <ResearchSection />
-        <SkillsSection />
-        <BlogsSection />
-        <ContactSection />
+        <main id="main-content" tabIndex={-1}>
+          <HeroSection />
+          <AboutSection />
+          <ExperienceSection />
+          <SocialSection />
+          <ProjectsSection />
+          <ResearchSection />
+          <ContactSection />
+        </main>
         <Footer />
       </div>
     </>

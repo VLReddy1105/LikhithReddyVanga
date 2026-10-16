@@ -1,9 +1,19 @@
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import path from "node:path";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
+import { contributionsHandler } from "./server/githubContributions";
 
-const plugins = [react(), tailwindcss()];
+const contributionApi: Plugin = {
+  name: "portfolio-contribution-api",
+  configureServer(server) {
+    server.middlewares.use("/api/github-contributions", contributionsHandler);
+  },
+  configurePreviewServer(server) {
+    server.middlewares.use("/api/github-contributions", contributionsHandler);
+  },
+};
+const plugins = [react(), tailwindcss(), contributionApi];
 
 export default defineConfig({
   plugins,

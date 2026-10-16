@@ -1,258 +1,233 @@
-/* Neural Monochrome — Research Section
-   Research areas, current work, academic interests */
+import { useState } from "react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { Link } from "wouter";
+import Reveal from "./Reveal";
+import SectionHeading from "./SectionHeading";
+import "./research-contact.css";
 
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+const LENSES = [
+  {
+    id: "embeddings",
+    label: "Embeddings",
+    question: "Where does a token begin?",
+    description:
+      "Each token is mapped to a learned vector. This initial representation enters the residual stream and changes as it passes through transformer blocks.",
+    limit:
+      "Individual coordinates do not have a guaranteed, human-readable meaning.",
+  },
+  {
+    id: "attention",
+    label: "Attention",
+    question: "How does context enter?",
+    description:
+      "Attention computes weights over available token positions and combines their value vectors. The lab exposes selected heads and the operations behind these connections.",
+    limit: "An attention weight alone is not evidence of causal importance.",
+  },
+  {
+    id: "states",
+    label: "Hidden states",
+    question: "What changes inside a block?",
+    description:
+      "Attention and MLP outputs are added to the residual stream. Following retained hidden states makes these successive updates available for inspection.",
+    limit:
+      "Representation changes describe model computation; they do not by themselves explain a decision.",
+  },
+  {
+    id: "prediction",
+    label: "Next token",
+    question: "What reaches the vocabulary?",
+    description:
+      "Final normalization and the language-model head turn the last hidden state into vocabulary logits. A sampling policy then selects the next token.",
+    limit:
+      "Intermediate Logit Lens readouts are projections, not predictions made at that layer.",
+  },
+] as const;
 
-const RESEARCH_AREAS = [
-  {
-    title: "LLM Interpretability",
-    description:
-      "Understanding the internal mechanics of large language models — how attention heads, residual streams, and MLP layers contribute to next-token prediction. Building visual analytics tools that bridge AI interpretability and human-computer interaction.",
-    icon: "🧠",
-    tags: ["TransformerLens", "Mechanistic Interpretability", "Attention Analysis", "Activation Patching"],
-    status: "Active Research",
-  },
-  {
-    title: "Remote Sensing & Deep Learning",
-    description:
-      "Applying deep learning segmentation models to satellite imagery (Sentinel-2) for detecting photovoltaic infrastructure. Multi-band feature engineering with RGB, NWIR, NDVI, and derived spectral indices.",
-    icon: "🛰️",
-    tags: ["Sentinel-2", "Semantic Segmentation", "NDVI", "Energy Infrastructure"],
-    status: "Active Research",
-  },
-  {
-    title: "Computational Genomics",
-    description:
-      "Machine learning approaches to genetic disease risk analysis. Integrating population genomics data with GWAS catalog records, with SHAP-based explainability for clinical transparency and ethical AI considerations.",
-    icon: "🧬",
-    tags: ["Genomics", "GWAS", "XGBoost", "SHAP", "Bioinformatics"],
-    status: "Completed",
-  },
-  {
-    title: "Generative AI & RAG Systems",
-    description:
-      "Building retrieval-augmented generation pipelines for real-world business automation. Integrating open-source LLMs (Qwen2.5, LLaMA, Gemma) with structured data retrieval for domain-specific applications.",
-    icon: "⚡",
-    tags: ["RAG", "LLaMA", "Qwen2.5", "Ollama", "MCP Servers"],
-    status: "Ongoing",
-  },
-];
-
-const AWARDS = [
-  {
-    title: "FSR AI Volunteer, BTU",
-    year: "2024",
-    description: "Core member volunteering at AI hackathons at Brandenburg Technical University.",
-  },
-  {
-    title: "Projections 2022 — Core Organizer",
-    year: "2022",
-    description: "Volunteered to organize Gujarat's largest technical event as a core member.",
-  },
-  {
-    title: "Hackathon Winner — Fraud Detection",
-    year: "2021",
-    description: "Won fraud detection ML challenge at Gujarat's largest tech fest as Hackathon Leader.",
-  },
-  {
-    title: "National Cyber Olympiad Champion",
-    year: "—",
-    description: "Gold Medal with Zonal Rank 1st in National Cyber Olympiad.",
-  },
-];
-
-function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+function TransformerDiagram({ active }: { active: string }) {
+  const stages = [
+    { id: "embeddings", label: "Embedding", detail: "Learned token vectors" },
+    { id: "attention", label: "Attention", detail: "Context routing" },
+    { id: "states", label: "Residual + MLP", detail: "Representation updates" },
+    {
+      id: "prediction",
+      label: "Vocabulary",
+      detail: "Norm → LM head → logits",
+    },
+  ];
   return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+    <div
+      className="research-computation"
+      aria-label="Conceptual transformer processing workflow"
     >
-      {children}
-    </motion.div>
+      <div className="computation-input">
+        <span>INPUT TOKENS</span>
+        <strong>Context becomes a representation.</strong>
+      </div>
+      <ol className="computation-stages">
+        {stages.map((stage, index) => (
+          <li key={stage.id} className={active === stage.id ? "is-active" : ""}>
+            <span className="computation-index">0{index + 1}</span>
+            <div>
+              <strong>{stage.label}</strong>
+              <span>{stage.detail}</span>
+            </div>
+            <span className="computation-port" aria-hidden="true" />
+          </li>
+        ))}
+      </ol>
+      <div className="computation-residual">
+        Residual stream · attention + MLP updates are added at each block.
+      </div>
+    </div>
   );
 }
 
 export default function ResearchSection() {
+  const [activeLens, setActiveLens] =
+    useState<(typeof LENSES)[number]["id"]>("attention");
+  const selectedLens = LENSES.find(lens => lens.id === activeLens)!;
   return (
     <section
       id="research"
-      style={{ background: "var(--background)", padding: "7rem 0", borderTop: "1px solid var(--border)" }}
+      className="portfolio-section research-section"
+      aria-labelledby="research-heading"
     >
       <div className="container">
-        {/* Section header */}
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-14">
-            <h2
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Research
-            </h2>
-          </div>
-        </AnimatedSection>
-
-        {/* Research areas grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          {RESEARCH_AREAS.map((area, i) => (
-            <AnimatedSection key={i} delay={i * 0.1}>
-              <div
-                style={{
-                  background: "var(--surface)",
-                  border: "1px solid var(--border)",
-                  borderRadius: "2px",
-                  padding: "1.75rem",
-                  height: "100%",
-                  transition: "border-color 0.25s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(59,130,246,0.25)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLDivElement).style.borderColor = "var(--border)";
-                }}
-              >
-                {/* Icon + Status */}
-                <div className="flex items-start justify-between mb-3">
-                  <span style={{ fontSize: "1.5rem" }}>{area.icon}</span>
-                  <span
-                    style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.6rem",
-                      color: area.status === "Active Research" ? "var(--navy)" : "var(--text-dim)",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "4px",
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: "5px",
-                        height: "5px",
-                        borderRadius: "50%",
-                        background: area.status === "Active Research" ? "var(--navy)" : "var(--text-dim)",
-                        display: "inline-block",
-                      }}
-                    />
-                    {area.status}
-                  </span>
-                </div>
-
-                <h3
-                  style={{
-                    fontFamily: "'Space Grotesk', sans-serif",
-                    fontSize: "1rem",
-                    fontWeight: 700,
-                    color: "var(--text-primary)",
-                    letterSpacing: "-0.01em",
-                    marginBottom: "0.75rem",
-                  }}
-                >
-                  {area.title}
-                </h3>
-
-                <p
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.85rem",
-                    color: "var(--text-muted)",
-                    lineHeight: 1.7,
-                    marginBottom: "1.25rem",
-                  }}
-                >
-                  {area.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1.5">
-                  {area.tags.map((tag) => (
-                    <span key={tag} className="tag-pill">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
-
-        {/* Awards & Recognition */}
-        <AnimatedSection delay={0.1}>
-          <h3
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "0.75rem",
-              color: "var(--text-dim)",
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              marginBottom: "1.5rem",
-            }}
-          >
-            Awards & Recognition
-          </h3>
-        </AnimatedSection>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {AWARDS.map((award, i) => (
-            <AnimatedSection key={i} delay={0.1 + i * 0.08}>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                  padding: "1.25rem",
-                  border: "1px solid var(--border)",
-                  borderRadius: "2px",
-                  background: "var(--background)",
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: "'JetBrains Mono', monospace",
-                    fontSize: "0.65rem",
-                    color: "var(--navy)",
-                    minWidth: "40px",
-                    paddingTop: "2px",
-                  }}
-                >
-                  {award.year}
-                </div>
+        <Reveal>
+          <SectionHeading
+            eyebrow="Research & exploration"
+            title="Making transformer behavior visible."
+            description="Building tools that connect real model computation with careful, interactive visual explanation."
+          />
+        </Reveal>
+        <div className="research-layout">
+          <Reveal className="research-perspective">
+            <p className="eyebrow">The current focus</p>
+            <h3 id="research-heading">A closer look at the model.</h3>
+            <p>
+              My LLM interpretability work follows a token through embeddings,
+              attention, hidden states and vocabulary readouts. The aim is to
+              make internal computation easier to inspect, while keeping the
+              limits of each visualization visible.
+            </p>
+            <ul className="research-principles">
+              <li>
+                <span aria-hidden="true">01</span>
                 <div>
-                  <div
-                    style={{
-                      fontFamily: "'Space Grotesk', sans-serif",
-                      fontSize: "0.88rem",
-                      fontWeight: 600,
-                      color: "var(--text-primary)",
-                      marginBottom: "4px",
-                    }}
-                  >
-                    {award.title}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: "'DM Sans', sans-serif",
-                      fontSize: "0.78rem",
-                      color: "var(--text-muted)",
-                      lineHeight: 1.5,
-                    }}
-                  >
-                    {award.description}
-                  </div>
+                  <strong>Capture once, explore many ways</strong>
+                  <p>Linked views work from retained model traces.</p>
                 </div>
-              </div>
-            </AnimatedSection>
-          ))}
+              </li>
+              <li>
+                <span aria-hidden="true">02</span>
+                <div>
+                  <strong>Follow the representation</strong>
+                  <p>
+                    Inspect residual updates and layer-by-layer hidden states.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <span aria-hidden="true">03</span>
+                <div>
+                  <strong>Keep interpretation precise</strong>
+                  <p>
+                    Distinguish observed tensors, derived readouts and causal
+                    claims.
+                  </p>
+                </div>
+              </li>
+            </ul>
+            <Link href="/projects/llm-interpretability" className="text-link">
+              Explore the supporting work{" "}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
+          </Reveal>
+          <Reveal className="research-explorer" delay={0.1}>
+            <div className="research-explorer-header">
+              <span className="eyebrow">Inside a transformer</span>
+              <span className="research-concept-label">
+                Conceptual overview
+              </span>
+            </div>
+            <div
+              className="research-lens-controls"
+              role="group"
+              aria-label="Explore transformer concepts"
+            >
+              {LENSES.map(lens => (
+                <button
+                  key={lens.id}
+                  type="button"
+                  aria-pressed={activeLens === lens.id}
+                  aria-controls="research-explanation"
+                  onClick={() => setActiveLens(lens.id)}
+                >
+                  {lens.label}
+                </button>
+              ))}
+            </div>
+            <TransformerDiagram active={activeLens} />
+            <div
+              id="research-explanation"
+              className="research-explanation"
+              aria-live="polite"
+              aria-atomic="true"
+            >
+              <h4>{selectedLens.question}</h4>
+              <p>{selectedLens.description}</p>
+              <p className="research-interpretation">
+                <strong>Interpretation:</strong> {selectedLens.limit}
+              </p>
+            </div>
+            <p className="research-diagram-caption">
+              A simplified explanatory diagram. No experimental measurements or
+              model results are shown.
+            </p>
+          </Reveal>
         </div>
+        <Reveal>
+          <div className="research-methods">
+            <div>
+              <span className="eyebrow">Representation geometry</span>
+              <h3>High-dimensional states. Thoughtful visual views.</h3>
+            </div>
+            <div>
+              <div className="research-method-tags">
+                <span>PCA</span>
+                <span>UMAP</span>
+                <span>t-SNE</span>
+              </div>
+              <p>
+                Methods of interest for exploring representations. Projection
+                geometry needs context: 2D proximity alone does not establish
+                meaning or causality. PCA and UMAP are planned work in the lab.
+              </p>
+            </div>
+            <a className="text-link" href="#contact">
+              Discuss research <ArrowRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+        </Reveal>
+        <Reveal>
+          <div className="research-completed">
+            <div>
+              <p className="eyebrow">Applied research · Completed</p>
+              <h3>MotionCB — solar infrastructure mapping</h3>
+              <p>
+                At BTU Cottbus-Senftenberg, I contributed to deep learning
+                pipelines for solar-farm and photovoltaic detection in
+                multispectral satellite and geospatial imagery. The work
+                combined object detection, segmentation and QGIS exploration,
+                feature extraction, layer management and validation for mapping
+                across Germany.
+              </p>
+            </div>
+            <Link href="/projects/motioncb" className="text-link">
+              View the work <ArrowUpRight size={17} aria-hidden="true" />
+            </Link>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

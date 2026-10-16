@@ -1,255 +1,137 @@
-/* Neural Monochrome — About Section
-   Two-column: left text, right AI brain visual
-   Stats row, education timeline, language badges */
+import { ArrowUpRight, Code2, FlaskConical, Layers3 } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import SectionHeading from "@/components/SectionHeading";
+import "./profile.css";
 
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef } from "react";
-
-const STATS = [
-  { value: "4+", label: "Years in AI" },
-  { value: "2", label: "Degrees in AI" },
-  { value: "5+", label: "Projects Built" },
-  { value: "3", label: "Research Areas" },
+const FOCUS_AREAS = [
+  {
+    title: "Research",
+    detail: "Making transformer behavior visible and easier to inspect.",
+    icon: FlaskConical,
+  },
+  {
+    title: "Engineering",
+    detail: "Connecting AI models, dependable APIs and thoughtful interfaces.",
+    icon: Code2,
+  },
+  {
+    title: "Building products",
+    detail:
+      "Turning business needs into practical software at VLR Technologies.",
+    icon: Layers3,
+  },
 ];
-
 const EDUCATION = [
   {
     degree: "M.Sc. Artificial Intelligence",
     school: "BTU Cottbus-Senftenberg",
     location: "Cottbus, Germany",
     period: "2024 – Present",
+    label: "In progress",
   },
   {
     degree: "B.Tech CSE — Artificial Intelligence",
     school: "Parul University",
     location: "Gujarat, India",
     period: "2020 – 2024",
+    label: "Undergraduate study",
   },
 ];
-
 const LANGUAGES = [
-  { lang: "English", level: "Fluent" },
-  { lang: "German", level: "Basic" },
-  { lang: "Hindi", level: "Fluent" },
-  { lang: "Telugu", level: "Native" },
+  { language: "English", level: "Fluent" },
+  { language: "German", level: "Basic" },
+  { language: "Hindi", level: "Fluent" },
+  { language: "Telugu", level: "Native" },
 ];
-
-function AnimatedSection({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 28 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay, ease: "easeOut" }}
-    >
-      {children}
-    </motion.div>
-  );
-}
 
 export default function AboutSection() {
   return (
-    <section id="about" style={{ background: "var(--background)", padding: "7rem 0" }}>
+    <section id="about" className="portfolio-section profile-section">
       <div className="container">
-        {/* Section header */}
-        <AnimatedSection>
-          <div className="flex items-center gap-4 mb-14">
-            <h2
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "clamp(1.8rem, 3vw, 2.5rem)",
-                fontWeight: 700,
-                color: "var(--text-primary)",
-                letterSpacing: "-0.02em",
-              }}
+        <Reveal>
+          <SectionHeading
+            eyebrow="A little context"
+            title="Research depth. Product mindset."
+          />
+        </Reveal>
+        <div className="profile-overview">
+          <Reveal className="profile-copy">
+            <p className="profile-lead">
+              I turn complex AI systems into useful, understandable products.
+            </p>
+            <p>
+              I’m Vanga Likhith Reddy, a full-stack and AI engineer pursuing an
+              M.Sc. in Artificial Intelligence at{" "}
+              <strong>BTU Cottbus-Senftenberg</strong> in Germany. My work
+              brings together model internals, interactive visualization and web
+              engineering.
+            </p>
+            <p>
+              As a <strong>Research Assistant</strong>, I work on LLM
+              interpretability and visualization: connecting transformer
+              computations to interfaces that people can explore. As the{" "}
+              <strong>founder of VLR Technologies</strong>, I apply that same
+              engineering mindset to software, AI solutions and digital
+              products.
+            </p>
+            <div className="profile-links">
+              <a className="text-link" href="#experience">
+                My experience <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+              <a className="text-link" href="#research">
+                Research focus <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            </div>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <aside
+              className="profile-focus"
+              aria-label="How I approach my work"
             >
-              About
-            </h2>
-          </div>
-        </AnimatedSection>
-
-        {/* Text content - wider single column */}
-        <div className="max-w-4xl">
-          {/* Left: Text content */}
-          <div>
-            <AnimatedSection delay={0.1}>
-              <p
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "1.05rem",
-                  color: "var(--text-muted)",
-                  lineHeight: 1.85,
-                  marginBottom: "1.5rem",
-                }}
-              >
-                I'm an AI enthusiast and Master's student at{" "}
-                <span style={{ color: "var(--text-primary)", fontWeight: 500 }}>
-                  BTU Cottbus-Senftenberg
-                </span>
-                , Germany. My entire academic journey — from Bachelor's to Master's — has been
-                rooted in Artificial Intelligence, giving me a deep, end-to-end understanding
-                of the field.
-              </p>
-              <p
-                style={{
-                  fontFamily: "'DM Sans', sans-serif",
-                  fontSize: "1.05rem",
-                  color: "var(--text-muted)",
-                  lineHeight: 1.85,
-                  marginBottom: "2.5rem",
-                }}
-              >
-                Currently working as a{" "}
-                <span style={{ color: "var(--navy)", fontWeight: 500 }}>
-                  Research Assistant
-                </span>{" "}
-                on LLM interpretability and visualization, I build systems that make transformer
-                models understandable. I'm motivated by ethical, scalable AI across agriculture,
-                healthcare, and data-driven automation.
-              </p>
-            </AnimatedSection>
-
-            {/* Stats */}
-            <AnimatedSection delay={0.2}>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-                {STATS.map((stat) => (
-                  <div
-                    key={stat.label}
-                    style={{
-                      padding: "1.25rem 1rem",
-                      border: "1px solid var(--border)",
-                      borderRadius: "2px",
-                      background: "var(--surface)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "'Space Grotesk', sans-serif",
-                        fontSize: "1.8rem",
-                        fontWeight: 700,
-                        color: "var(--navy)",
-                        letterSpacing: "-0.02em",
-                        lineHeight: 1,
-                        marginBottom: "0.25rem",
-                      }}
-                    >
-                      {stat.value}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "'DM Sans', sans-serif",
-                        fontSize: "0.72rem",
-                        color: "var(--text-muted)",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.06em",
-                      }}
-                    >
-                      {stat.label}
-                    </div>
+              <p className="eyebrow">Three connected perspectives</p>
+              {FOCUS_AREAS.map(({ title, detail, icon: Icon }) => (
+                <div className="profile-focus-row" key={title}>
+                  <span className="profile-icon">
+                    <Icon size={21} aria-hidden="true" />
+                  </span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{detail}</p>
                   </div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            {/* Education */}
-            <AnimatedSection delay={0.3}>
-              <h3
-                style={{
-                  fontFamily: "'Space Grotesk', sans-serif",
-                  fontSize: "0.75rem",
-                  color: "var(--text-dim)",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  marginBottom: "1rem",
-                }}
-              >
-                Education
-              </h3>
-              <div className="space-y-4">
-                {EDUCATION.map((edu, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      gap: "1rem",
-                      paddingBottom: "1rem",
-                      borderBottom: i < EDUCATION.length - 1 ? "1px solid var(--border)" : "none",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "6px",
-                        height: "6px",
-                        borderRadius: "50%",
-                        background: "var(--navy)",
-                        marginTop: "6px",
-                        flexShrink: 0,
-                      }}
-                    />
-                    <div>
-                      <div
-                        style={{
-                          fontFamily: "'Space Grotesk', sans-serif",
-                          fontSize: "0.9rem",
-                          fontWeight: 600,
-                          color: "var(--text-primary)",
-                          marginBottom: "2px",
-                        }}
-                      >
-                        {edu.degree}
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: "'DM Sans', sans-serif",
-                          fontSize: "0.82rem",
-                          color: "var(--text-muted)",
-                        }}
-                      >
-                        {edu.school} · {edu.location}
-                      </div>
-                      <div
-                        style={{
-                          fontFamily: "'JetBrains Mono', monospace",
-                          fontSize: "0.7rem",
-                          color: "var(--text-dim)",
-                          marginTop: "2px",
-                        }}
-                      >
-                        {edu.period}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            {/* Languages */}
-            <AnimatedSection delay={0.4}>
-              <div className="flex flex-wrap gap-2 mt-6">
-                {LANGUAGES.map((l) => (
-                  <div
-                    key={l.lang}
-                    style={{
-                      fontFamily: "'JetBrains Mono', monospace",
-                      fontSize: "0.7rem",
-                      padding: "0.3rem 0.75rem",
-                      border: "1px solid var(--border)",
-                      borderRadius: "2px",
-                      color: "var(--text-muted)",
-                      background: "var(--surface)",
-                    }}
-                  >
-                    {l.lang}{" "}
-                    <span style={{ color: "var(--text-dim)" }}>· {l.level}</span>
-                  </div>
-                ))}
-              </div>
-            </AnimatedSection>
-          </div>
+                </div>
+              ))}
+            </aside>
+          </Reveal>
         </div>
+        <Reveal delay={0.1}>
+          <div className="profile-education">
+            <div className="profile-education-heading">
+              <p className="eyebrow">Education</p>
+              <p>A foundation in artificial intelligence.</p>
+            </div>
+            <div className="profile-education-grid">
+              {EDUCATION.map(education => (
+                <article className="profile-degree" key={education.degree}>
+                  <div className="profile-degree-meta">
+                    <span className="profile-badge">{education.label}</span>
+                    <span>{education.period}</span>
+                  </div>
+                  <h3>{education.degree}</h3>
+                  <p>{education.school}</p>
+                  <p className="profile-location">{education.location}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+          <ul className="profile-languages" aria-label="Languages">
+            {LANGUAGES.map(({ language, level }) => (
+              <li key={language}>
+                <span>{language}</span>
+                <span>{level}</span>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
     </section>
   );

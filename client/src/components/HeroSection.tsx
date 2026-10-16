@@ -1,16 +1,7 @@
-/* Neural Monochrome — Hero Section
-   Asymmetric layout, typewriter role animation, social icons, CTA */
+/* Preserve the original asymmetric hero, portrait, and name typography. */
 
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-
-const ROLES = [
-  "AI Researcher",
-  "LLM Engineer",
-  "Full-Stack Developer",
-  "ML Practitioner",
-  "Deep Learning Enthusiast",
-];
+import { motion, useReducedMotion } from "framer-motion";
+import CVDownload from "./CVDownload";
 
 // Social icons as inline SVGs
 const LinkedInIcon = () => (
@@ -26,294 +17,310 @@ const GitHubIcon = () => (
 );
 
 const MailIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+  <svg
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+  >
     <rect x="2" y="4" width="20" height="16" rx="2" />
     <path d="m2 7 10 7 10-7" />
   </svg>
 );
 
 const ArrowDownIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+  <svg
+    width="14"
+    height="14"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+  >
     <path d="M12 5v14M5 12l7 7 7-7" />
   </svg>
 );
 
 export default function HeroSection() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [displayedRole, setDisplayedRole] = useState("");
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [charIdx, setCharIdx] = useState(0);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const role = ROLES[roleIndex];
-    if (!isDeleting) {
-      if (charIdx < role.length) {
-        timeoutRef.current = setTimeout(() => {
-          setDisplayedRole(role.slice(0, charIdx + 1));
-          setCharIdx((c) => c + 1);
-        }, 60);
-      } else {
-        timeoutRef.current = setTimeout(() => setIsDeleting(true), 2000);
-      }
-    } else {
-      if (charIdx > 0) {
-        timeoutRef.current = setTimeout(() => {
-          setDisplayedRole(role.slice(0, charIdx - 1));
-          setCharIdx((c) => c - 1);
-        }, 35);
-      } else {
-        setIsDeleting(false);
-        setRoleIndex((r) => (r + 1) % ROLES.length);
-      }
-    }
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [roleIndex, charIdx, isDeleting]);
+  const reducedMotion = useReducedMotion();
 
   const scrollToAbout = () => {
-    document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+    document
+      .getElementById("about")
+      ?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth" });
   };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center overflow-hidden"
+      className="hero-section relative min-h-screen flex items-center overflow-hidden"
       style={{
-        background: "var(--background)",
+        background: "transparent",
       }}
     >
       {/* Hero background image - hidden in light mode, visible in dark mode */}
       <div
         className="absolute inset-0"
         style={{
-          backgroundImage: `url(https://d2xsxph8kpxj0f.cloudfront.net/310519663641032676/c5uUzgTZkZie2ES2g2A53m/hero-bg-FBgb9nziBUZydbKXBhRiAA.webp)`,
+          backgroundImage:
+            "radial-gradient(ellipse at 85% 45%, var(--navy-dim), transparent 55%)",
           backgroundSize: "cover",
           backgroundPosition: "center right",
-          opacity: "var(--bg-image-opacity, 0.35)",
+          opacity: 0.8,
         }}
       />
 
       {/* Dot grid overlay */}
-      <div className="absolute inset-0 dot-grid" style={{ opacity: 0.3 }} />
+      <div className="absolute inset-0" style={{ opacity: 0.3 }} />
 
       {/* Left edge accent line */}
       <div
         className="absolute left-0 top-0 bottom-0 w-px"
-        style={{ background: "linear-gradient(to bottom, transparent, var(--navy), transparent)" }}
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, var(--navy), transparent)",
+        }}
       />
 
       <div className="container relative z-10">
         <div className="hero-layout pt-24 pb-16">
           <div className="hero-copy">
-          {/* Location badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="flex items-center gap-2 mb-8"
-          >
-            <span
+            {/* Location badge */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="flex flex-wrap items-center gap-2 mb-8"
+            >
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.7rem",
+                  color: "var(--navy)",
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                }}
+              >
+                ◉ Cottbus, Germany
+              </span>
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.7rem",
+                  color: "var(--text-dim)",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                · Available for opportunities
+              </span>
+            </motion.div>
+
+            {/* Name */}
+            <motion.h1
+              tabIndex={-1}
+              initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.7rem",
-                color: "var(--navy)",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
+                fontWeight: 700,
+                color: "var(--text-primary)",
+                letterSpacing: "-0.03em",
+                lineHeight: 1.05,
+                marginBottom: "0.5rem",
               }}
             >
-              ◉ Cottbus, Germany
-            </span>
-            <span
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.7rem",
-                color: "var(--text-dim)",
-                letterSpacing: "0.08em",
-              }}
+              Vanga
+              <br />
+              <span style={{ color: "var(--navy)" }}>Likhith</span> Reddy
+            </motion.h1>
+
+            {/* Typewriter role */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center gap-2 mb-6"
+              style={{ minHeight: "2rem" }}
             >
-              · Available for opportunities
-            </span>
-          </motion.div>
+              <span
+                style={{
+                  fontFamily: "'DM Sans', sans-serif",
+                  fontSize: "1.1rem",
+                  color: "var(--text-muted)",
+                  fontWeight: 400,
+                }}
+              >
+                AI Researcher · Full-Stack Engineer
+              </span>
+            </motion.div>
 
-          {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: "clamp(2.8rem, 6vw, 5.5rem)",
-              fontWeight: 700,
-              color: "var(--text-primary)",
-              letterSpacing: "-0.03em",
-              lineHeight: 1.05,
-              marginBottom: "0.5rem",
-            }}
-          >
-            Vanga
-            <br />
-            <span style={{ color: "var(--navy)" }}>Likhith</span> Reddy
-          </motion.h1>
-
-          {/* Typewriter role */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="flex items-center gap-2 mb-6"
-            style={{ height: "2rem" }}
-          >
-            <span
+            {/* Summary */}
+            <motion.p
+              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
               style={{
                 fontFamily: "'DM Sans', sans-serif",
-                fontSize: "1.1rem",
+                fontSize: "1rem",
                 color: "var(--text-muted)",
-                fontWeight: 400,
+                lineHeight: 1.75,
+                maxWidth: "520px",
+                marginBottom: "2.5rem",
               }}
             >
-              {displayedRole}
-              <span className="typewriter-cursor" />
-            </span>
-          </motion.div>
+              MSc Artificial Intelligence student at BTU Cottbus-Senftenberg.
+              Researching how language models work and engineering products that
+              people can use. Founder of VLR Technologies.
+            </motion.p>
 
-          {/* Summary */}
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            style={{
-              fontFamily: "'DM Sans', sans-serif",
-              fontSize: "1rem",
-              color: "var(--text-muted)",
-              lineHeight: 1.75,
-              maxWidth: "520px",
-              marginBottom: "2.5rem",
-            }}
-          >
-            Master's student in AI at BTU Cottbus. Building interpretable LLMs,
-            deep learning pipelines, and full-stack AI systems. Passionate about
-            ethical, scalable intelligence.
-          </motion.p>
+            {/* CTAs */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.75 }}
+              className="flex flex-wrap items-center gap-4 mb-12"
+            >
+              <CVDownload />
+              <a
+                href="mailto:reddylikhith10@gmail.com"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.85rem",
+                  fontWeight: 600,
+                  color: "var(--button-foreground)",
+                  background: "var(--navy)",
+                  padding: "0.65rem 1.5rem",
+                  borderRadius: "2px",
+                  textDecoration: "none",
+                  letterSpacing: "0.02em",
+                  transition: "opacity 0.2s",
+                }}
+                onMouseEnter={e => (e.currentTarget.style.opacity = "0.85")}
+                onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
+              >
+                Get in touch
+              </a>
+              <button
+                onClick={() =>
+                  document.getElementById("work")?.scrollIntoView({
+                    behavior: reducedMotion ? "auto" : "smooth",
+                  })
+                }
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "0.85rem",
+                  fontWeight: 500,
+                  color: "var(--text-primary)",
+                  background: "transparent",
+                  padding: "0.65rem 1.5rem",
+                  borderRadius: "2px",
+                  border: "1px solid var(--border)",
+                  cursor: "pointer",
+                  letterSpacing: "0.02em",
+                  transition: "border-color 0.2s, color 0.2s",
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.borderColor = "var(--navy)";
+                  e.currentTarget.style.color = "var(--navy)";
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.borderColor = "var(--border)";
+                  e.currentTarget.style.color = "var(--text-primary)";
+                }}
+              >
+                View Projects
+              </button>
+            </motion.div>
 
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.75 }}
-            className="flex flex-wrap items-center gap-4 mb-12"
-          >
-            <a
-              href="mailto:reddylikhith10@gmail.com"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "0.85rem",
-                fontWeight: 600,
-                color: "white",
-                background: "var(--navy)",
-                padding: "0.65rem 1.5rem",
-                borderRadius: "2px",
-                textDecoration: "none",
-                letterSpacing: "0.02em",
-                transition: "opacity 0.2s",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.85")}
-              onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+            {/* Social icons */}
+            <motion.div
+              initial={reducedMotion ? false : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="flex flex-wrap items-center gap-5 hero-socials"
             >
-              Hire Me
-            </a>
-            <button
-              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontSize: "0.85rem",
-                fontWeight: 500,
-                color: "var(--text-primary)",
-                background: "transparent",
-                padding: "0.65rem 1.5rem",
-                borderRadius: "2px",
-                border: "1px solid var(--border)",
-                cursor: "pointer",
-                letterSpacing: "0.02em",
-                transition: "border-color 0.2s, color 0.2s",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "var(--navy)";
-                e.currentTarget.style.color = "var(--navy)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--border)";
-                e.currentTarget.style.color = "var(--text-primary)";
-              }}
-            >
-              View Projects
-            </button>
-          </motion.div>
+              <a
+                href="https://www.linkedin.com/in/likhithreddyvanga/"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LinkedIn"
+                aria-label="LinkedIn profile"
+                style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
+                onMouseEnter={e =>
+                  (e.currentTarget.style.color = "var(--navy)")
+                }
+                onMouseLeave={e =>
+                  (e.currentTarget.style.color = "var(--text-dim)")
+                }
+              >
+                <LinkedInIcon />
+              </a>
+              <a
+                href="https://github.com/VLReddy1105"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="GitHub"
+                aria-label="GitHub profile"
+                style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
+                onMouseEnter={e =>
+                  (e.currentTarget.style.color = "var(--navy)")
+                }
+                onMouseLeave={e =>
+                  (e.currentTarget.style.color = "var(--text-dim)")
+                }
+              >
+                <GitHubIcon />
+              </a>
+              <a
+                href="mailto:reddylikhith10@gmail.com"
+                title="Email"
+                aria-label="Send an email"
+                style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
+                onMouseEnter={e =>
+                  (e.currentTarget.style.color = "var(--navy)")
+                }
+                onMouseLeave={e =>
+                  (e.currentTarget.style.color = "var(--text-dim)")
+                }
+              >
+                <MailIcon />
+              </a>
 
-          {/* Social icons */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.9 }}
-            className="flex items-center gap-5"
-          >
-            <a
-              href="https://www.linkedin.com/in/likhith-reddy-vanga"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="LinkedIn"
-              style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--navy)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-dim)")}
-            >
-              <LinkedInIcon />
-            </a>
-            <a
-              href="https://github.com/VLReddy1105"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="GitHub"
-              style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--navy)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-dim)")}
-            >
-              <GitHubIcon />
-            </a>
-            <a
-              href="mailto:reddylikhith10@gmail.com"
-              title="Email"
-              style={{ color: "var(--text-dim)", transition: "color 0.2s" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--navy)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-dim)")}
-            >
-              <MailIcon />
-            </a>
+              <span
+                style={{
+                  width: "1px",
+                  height: "20px",
+                  background: "var(--border)",
+                  display: "inline-block",
+                }}
+              />
 
-            <span style={{ width: "1px", height: "20px", background: "var(--border)", display: "inline-block" }} />
-
-            <span
-              style={{
-                fontFamily: "'JetBrains Mono', monospace",
-                fontSize: "0.65rem",
-                color: "var(--text-dim)",
-                letterSpacing: "0.08em",
-              }}
-            >
-              reddylikhith10@gmail.com
-            </span>
-          </motion.div>
+              <span
+                style={{
+                  fontFamily: "'JetBrains Mono', monospace",
+                  fontSize: "0.65rem",
+                  color: "var(--text-dim)",
+                  letterSpacing: "0.08em",
+                }}
+              >
+                reddylikhith10@gmail.com
+              </span>
+            </motion.div>
           </div>
 
           <motion.aside
             className="hero-portrait-wrap"
-            initial={{ opacity: 0, x: 36 }}
+            initial={reducedMotion ? false : { opacity: 0, x: 36 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.45, ease: "easeOut" }}
             aria-label="Profile photo of Vanga Likhith Reddy"
@@ -321,9 +328,14 @@ export default function HeroSection() {
             <div className="hero-portrait-card">
               <div className="hero-portrait-frame">
                 <img
-                  src="/images/profile-vlr.jpg"
+                  src="/images/profile-vlr-960.webp"
+                  srcSet="/images/profile-vlr-640.webp 640w, /images/profile-vlr-960.webp 960w, /images/profile-vlr-1280.webp 1280w"
+                  sizes="(min-width: 1024px) 416px, (max-width: 767px) 320px, 368px"
                   alt="Vanga Likhith Reddy"
                   className="hero-portrait-image"
+                  width={4284}
+                  height={5713}
+                  fetchPriority="high"
                 />
               </div>
               <div className="hero-portrait-badge">
@@ -331,6 +343,9 @@ export default function HeroSection() {
                 AI/ML Builder
               </div>
             </div>
+            <p className="hero-scene-note">
+              Procedural AI ecosystem · scroll to explore
+            </p>
           </motion.aside>
         </div>
       </div>
@@ -339,7 +354,12 @@ export default function HeroSection() {
       <button
         onClick={scrollToAbout}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-        style={{ background: "none", border: "none", color: "var(--text-dim)", cursor: "pointer" }}
+        style={{
+          background: "none",
+          border: "none",
+          color: "var(--text-dim)",
+          cursor: "pointer",
+        }}
       >
         <span
           style={{
@@ -351,10 +371,7 @@ export default function HeroSection() {
         >
           scroll
         </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <motion.div animate={{ y: 0 }}>
           <ArrowDownIcon />
         </motion.div>
       </button>
