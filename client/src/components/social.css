@@ -125,8 +125,8 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
-  font-size: 0.6rem;
-  color: var(--text-dim);
+  font-size: 0.78rem;
+  color: var(--text-muted);
   margin-bottom: 0.6rem;
 }
 .post-meta > span {
@@ -139,8 +139,8 @@
   margin-bottom: 0.65rem;
 }
 .linkedin-post p {
-  font-size: 0.77rem;
-  line-height: 1.8;
+  font-size: 0.9rem;
+  line-height: 1.7;
   color: var(--text-muted);
   margin-bottom: 0.75rem;
 }
@@ -180,8 +180,8 @@
 }
 .github-bio {
   color: var(--text-muted);
-  font-size: 0.8rem;
-  line-height: 1.8;
+  font-size: 0.9rem;
+  line-height: 1.7;
   margin: -0.5rem 0 1.5rem;
 }
 .github-repositories {
@@ -393,7 +393,7 @@
   margin-top: 0.65rem;
 }
 .contribution-footer p {
-  font-size: 0.55rem;
+  font-size: 0.78rem;
   color: var(--text-muted);
 }
 .contribution-legend {
@@ -401,7 +401,7 @@
   gap: 2px;
   align-items: center;
   color: var(--text-dim);
-  font-size: 0.5rem;
+  font-size: 0.72rem;
 }
 .contribution-legend i {
   width: 6px;
@@ -416,7 +416,7 @@
   margin-top: 0.6rem;
 }
 .contribution-source {
-  font-size: 0.6rem;
+  font-size: 0.84rem;
   min-height: 30px;
   margin-top: 0.2rem;
 }
@@ -511,7 +511,7 @@
   font-size: 0.56rem;
 }
 .contribution-footer p {
-  font-size: 0.62rem;
+  font-size: 0.78rem;
 }
 .contribution-panel > .social-note {
   font-size: 0.6rem;
@@ -536,8 +536,8 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  color: var(--navy);
-  font-size: 0.65rem;
+  color: var(--text-muted);
+  font-size: 0.81rem;
   line-height: 1.6;
   margin-top: 0.9rem;
 }
